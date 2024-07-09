@@ -6,12 +6,12 @@ export const login = async (params) => {
   const user = await getByEmail(params.email)
 
   if (!user) {
-    return {error: 'Invalid e-mail or password'}
+    return {error: 'E-mail ou senha inválidos'}
   }
 
   const passwordCorrect = becrypt.compareSync(params.password, user.password)
   if (!passwordCorrect) {
-    return {error: 'Invalid e-mail or password'}
+    return {error: 'E-mail ou senha inválidos'}
   }
 
   const token = jwt.sign({id: user.id}, process.env.JWT_SECRET)
@@ -23,7 +23,7 @@ export const register = async (params) => {
   const user = await getByEmail(params.email)
 
   if (user) {
-    return {error: 'This e-mail already exists'}
+    return {error: 'este e-mail já está cadastrado'}
   }
 
   const userCreated = await save(params)
